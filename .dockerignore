@@ -1,1 +1,3 @@
-/tmp
+/var/cache/*
+/var/log/*
+/tmp/*
