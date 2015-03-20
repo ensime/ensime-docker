@@ -29,22 +29,10 @@ RUN\
 
 ################################################
 # Java
-#
-# Alternative Javas by inspired by https://github.com/dockerfile/java/
 RUN\
-  for V in 6 7 8 ; do\
-    echo oracle-java${V}-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections ;\
-  done ;\
-  apt-get install -y openjdk-7-source\
-                     oracle-java6-installer\
-                     oracle-java7-installer\
-                     oracle-java7-unlimited-jce-policy\
-                     oracle-java8-installer\
-                     oracle-java8-unlimited-jce-policy ;\
   apt-get install -y openjdk-6-source ;\
   update-java-alternatives -s ${JAVA_VARIANT} ;\
   apt-get clean
-
 
 ################################################
 # SBT (and by implication, Scala)
@@ -100,7 +88,7 @@ RUN\
 # Shippable tries to install these scripts on startup, so we may as
 # well add them here since it is our CI platform.
 RUN\
-  apt-get install -y git-core python-pip ssh ;\
+  apt-get install -y locales git-core python-pip ssh ;\
   apt-get clean ;\
   pip install virtualenv ;\
   pip install --install-option="--prefix=/root/ve" pika boto glob2 ;\
