@@ -22,7 +22,6 @@ RUN\
   echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf &&\
   echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf &&\
   apt-get update -qq &&\
-  apt-get upgrade -qq &&\
   apt-get autoremove -qq &&\
   apt-get clean
 
