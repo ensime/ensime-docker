@@ -32,7 +32,7 @@ RUN\
     git reset --hard origin/$BRANCH &&\
     git clean -xfd &&\
     echo '' >> project/plugins.sbt &&\
-    echo 'addSbtPlugin("org.ensime" % "ensime-sbt" % "0.1.5")' >> project/plugins.sbt &&\
+    echo 'addSbtPlugin("org.ensime" % "ensime-sbt" % "0.1.7")' >> project/plugins.sbt &&\
     sbt gen-ensime ;\
   done &&\
   rm -rf /root/ensime-server
