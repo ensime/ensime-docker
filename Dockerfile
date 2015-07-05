@@ -61,7 +61,7 @@ RUN\
 # ensures we have all runtime deps for our builds. Xvfb is needed to
 # run headless tests.
 RUN\
-  apt-get install -y xvfb emacs23 &&\
+  apt-get install -y emacs23 &&\
   apt-get clean
 RUN\
   apt-get install -y debfoster &&\
@@ -76,20 +76,8 @@ RUN\
   cd /tmp && tar xf emacs-24.3.tar.xz && cd emacs-24.3 && ./configure --prefix=/opt/emacs-24.3 && make && make install &&\
   curl http://ftp.gnu.org/gnu/emacs/emacs-24.4.tar.xz -o /tmp/emacs-24.4.tar.xz &&\
   cd /tmp && tar xf emacs-24.4.tar.xz && cd emacs-24.4 && ./configure --prefix=/opt/emacs-24.4 && make && make install &&\
+  curl http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz -o /tmp/emacs-24.5.tar.xz &&\
+  cd /tmp && tar xf emacs-24.5.tar.xz && cd emacs-24.5 && ./configure --prefix=/opt/emacs-24.5 && make && make install &&\
   echo Y | debfoster -f &&\
   rm -rf /tmp/emacs* &&\
   apt-get clean
-  
-  
-################################################
-# Shippable
-#
-# Shippable tries to install these scripts on startup, so we may as
-# well add them here since it is our CI platform.
-RUN\
-  apt-get install -y locales git-core python-pip ssh &&\
-  apt-get clean &&\
-  pip install virtualenv &&\
-  pip install --install-option="--prefix=/root/ve" pika boto glob2 &&\
-  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen &&\
-  locale-gen
