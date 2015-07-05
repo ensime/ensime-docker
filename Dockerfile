@@ -81,3 +81,9 @@ RUN\
   echo Y | debfoster -f &&\
   rm -rf /tmp/emacs* &&\
   apt-get clean
+
+################################################
+# Git
+RUN\
+  apt-get install -y git &&\
+  apt-get clean
