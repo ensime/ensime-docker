@@ -25,6 +25,13 @@ RUN\
   apt-get autoremove -qq &&\
   apt-get clean
 
+################################################
+# Base System
+RUN\
+  apt-get install -y git-core locales &&\
+  echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen &&\
+  locale-gen &&\
+  apt-get clean
 
 ################################################
 # Java
@@ -58,8 +65,7 @@ RUN\
 # This involves installing the build-deps for emacs23. To clean up we
 # need to take a debfoster snapshot of before and agressively purge
 # once we have done the compiles. Having the additional system emacs
-# ensures we have all runtime deps for our builds. Xvfb is needed to
-# run headless tests.
+# ensures we have all runtime deps for our builds.
 RUN\
   apt-get install -y emacs23 &&\
   apt-get clean
@@ -80,10 +86,4 @@ RUN\
   cd /tmp && tar xf emacs-24.5.tar.xz && cd emacs-24.5 && ./configure --prefix=/opt/emacs-24.5 && make && make install &&\
   echo Y | debfoster -f &&\
   rm -rf /tmp/emacs* &&\
-  apt-get clean
-
-################################################
-# Git
-RUN\
-  apt-get install -y git &&\
   apt-get clean
