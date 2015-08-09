@@ -28,7 +28,7 @@ RUN\
 ################################################
 # Base System
 RUN\
-  apt-get install -y git-core locales &&\
+  apt-get install -y curl git git-core locales &&\
   echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen &&\
   locale-gen &&\
   apt-get clean
@@ -87,3 +87,12 @@ RUN\
   echo Y | debfoster -f &&\
   rm -rf /tmp/emacs* &&\
   apt-get clean
+ENV PATH /opt/emacs-24.5/bin:${PATH}
+
+################################################
+# Cask
+RUN\
+  apt-get install -y python &&\
+  curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python &&\
+  apt-get clean
+ENV PATH /root/.cask/bin:${PATH}
