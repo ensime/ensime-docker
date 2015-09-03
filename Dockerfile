@@ -9,7 +9,7 @@ ENV JAVA_VARIANT java-1.6.0-openjdk-amd64
 
 ENV JAVA_HOME /usr/lib/jvm/${JAVA_VARIANT}/jre/
 ENV JDK_HOME /usr/lib/jvm/${JAVA_VARIANT}/
-ENV SBT_VARIANTS 0.13.7-RC3 0.13.7 0.13.8
+ENV SBT_VARIANTS 0.13.9
 ENV SCALA_VARIANTS 2.9.2 2.9.3 2.10.5 2.11.7
 
 ################################################
@@ -28,7 +28,7 @@ RUN\
 ################################################
 # Base System
 RUN\
-  apt-get install -y curl git git-core locales &&\
+  apt-get install -y curl git locales ca-certificates &&\
   echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen &&\
   locale-gen &&\
   apt-get clean
