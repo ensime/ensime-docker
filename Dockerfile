@@ -10,7 +10,7 @@ ENV JAVA_VARIANT java-1.6.0-openjdk-amd64
 ENV JAVA_HOME /usr/lib/jvm/${JAVA_VARIANT}/jre/
 ENV JDK_HOME /usr/lib/jvm/${JAVA_VARIANT}/
 ENV SBT_VARIANTS 0.13.9
-ENV SCALA_VARIANTS 2.9.2 2.9.3 2.10.5 2.11.7
+ENV SCALA_VARIANTS 2.10.4 2.10.5 2.11.7
 
 ################################################
 # Package Management
@@ -93,3 +93,11 @@ RUN\
   curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python &&\
   apt-get clean
 ENV PATH /root/.cask/bin:${PATH}
+
+################################################
+# ensime-vim
+RUN\
+  apt-get install -yy make g++ gcc openssl libssl-dev ruby ruby-dev python-mock &&\
+  pip install websocket-client &&\
+  gem install bundle &&\
+  bundle install
