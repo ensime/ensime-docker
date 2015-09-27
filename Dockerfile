@@ -28,11 +28,9 @@ RUN\
   cd /root &&\
   git clone https://github.com/ensime/ensime-server.git &&\
   cd ensime-server &&\
-  for BRANCH in master scala-2.10 scala-2.9 ; do\
+  for BRANCH in master ; do\
     git reset --hard origin/$BRANCH &&\
     git clean -xfd &&\
-    echo '' >> project/plugins.sbt &&\
-    echo 'addSbtPlugin("org.ensime" % "ensime-sbt" % "0.1.7")' >> project/plugins.sbt &&\
     sbt gen-ensime ;\
   done &&\
   rm -rf /root/ensime-server
