@@ -105,5 +105,5 @@ RUN\
 ################################################
 # Drone deployment support
 RUN\
-  apt-get install -yy ccrypt &&\
+  apt-get install -yy openssh-client ccrypt &&\
   apt-get clean
