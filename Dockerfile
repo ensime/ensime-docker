@@ -99,4 +99,11 @@ ENV PATH /root/.cask/bin:${PATH}
 RUN\
   apt-get install -yy make g++ gcc openssl libssl-dev ruby ruby-dev python-mock python-pip &&\
   pip install websocket-client &&\
-  gem install bundle
+  gem install bundle &&\
+  apt-get clean
+
+################################################
+# Drone deployment support
+RUN\
+  apt-get install -yy ccrypt &&\
+  apt-get clean
