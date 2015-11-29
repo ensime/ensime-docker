@@ -20,7 +20,6 @@ MAINTAINER Sam Halliday, sam.halliday@gmail.com
 #                      oracle-java8-unlimited-jce-policy ;\
 #   apt-get clean
 
-  
 ################################################
 # ENSIME Ivy Cache
 # (could do with using the right scala versions)
@@ -31,6 +30,6 @@ RUN\
   for BRANCH in master ; do\
     git reset --hard origin/$BRANCH &&\
     git clean -xfd &&\
-    sbt gen-ensime ;\
+    sbt gen-ensime gen-ensime-meta ;\
   done &&\
   rm -rf /root/ensime-server
