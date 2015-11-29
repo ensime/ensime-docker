@@ -10,7 +10,7 @@ ENV JAVA_VARIANT java-1.6.0-openjdk-amd64
 ENV JAVA_HOME /usr/lib/jvm/${JAVA_VARIANT}/jre/
 ENV JDK_HOME /usr/lib/jvm/${JAVA_VARIANT}/
 ENV SBT_VARIANTS 0.13.9
-ENV SCALA_VARIANTS 2.10.4 2.10.5 2.11.6 2.11.7
+ENV SCALA_VARIANTS 2.10.4 2.10.6 2.11.6 2.11.7
 
 ################################################
 # Package Management
@@ -28,7 +28,7 @@ RUN\
 ################################################
 # Base System
 RUN\
-  apt-get install -y curl git locales ca-certificates &&\
+  apt-get install -y curl unzip git locales ca-certificates &&\
   echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen &&\
   locale-gen &&\
   apt-get clean
@@ -72,9 +72,7 @@ RUN\
   debfoster -q &&\
   apt-get build-dep -y emacs23 &&\
   mkdir /tmp/emacs-build &&\
-  curl http://ftp.gnu.org/gnu/emacs/emacs-24.1.tar.bz2 -o /tmp/emacs-24.1.tar.bz2 &&\
-  cd /tmp && tar xf emacs-24.1.tar.bz2 && cd emacs-24.1 && ./configure --prefix=/opt/emacs-24.1 && make && make install &&\
-  for EMACS_VERSION in 24.2 24.3 24.4 24.5 ; do\
+  for EMACS_VERSION in 24.3 24.4 24.5 ; do\
     curl http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz -o /tmp/emacs-${EMACS_VERSION}.tar.xz &&\
     cd /tmp && tar xf emacs-${EMACS_VERSION}.tar.xz &&\
     cd emacs-${EMACS_VERSION} &&\
