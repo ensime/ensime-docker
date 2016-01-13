@@ -1,16 +1,15 @@
 # https://docs.docker.com/reference/builder/
 # NOTE dockerignore is ignored https://github.com/docker/docker/issues/9455
 
-# jessie doesn't have jdk6
-FROM debian:wheezy
+FROM debian:jessie
 
 MAINTAINER Sam Halliday, sam.halliday@gmail.com
-ENV JAVA_VARIANT java-1.6.0-openjdk-amd64
+ENV JAVA_VARIANT java-1.7.0-openjdk-amd64
 
 ENV JAVA_HOME /usr/lib/jvm/${JAVA_VARIANT}/jre/
 ENV JDK_HOME /usr/lib/jvm/${JAVA_VARIANT}/
 ENV SBT_VARIANTS 0.13.9
-ENV SCALA_VARIANTS 2.10.4 2.10.6 2.11.6 2.11.7
+ENV SCALA_VARIANTS 2.10.6 2.11.7
 
 ################################################
 # Package Management
@@ -36,7 +35,7 @@ RUN\
 ################################################
 # Java
 RUN\
-  apt-get install -y openjdk-6-source &&\
+  apt-get install -y openjdk-7-source &&\
   update-java-alternatives -s ${JAVA_VARIANT} &&\
   apt-get clean
 
@@ -65,14 +64,14 @@ RUN\
 # once we have done the compiles. Having the additional system emacs
 # ensures we have all runtime deps for our builds.
 RUN\
-  apt-get install -y emacs23 &&\
+  apt-get install -y emacs24 &&\
   apt-get clean
 RUN\
   apt-get install -y debfoster &&\
   debfoster -q &&\
-  apt-get build-dep -y emacs23 &&\
+  apt-get build-dep -y emacs24 &&\
   mkdir /tmp/emacs-build &&\
-  for EMACS_VERSION in 24.3 24.4 24.5 ; do\
+  for EMACS_VERSION in 24.4 24.5 ; do\
     curl http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz -o /tmp/emacs-${EMACS_VERSION}.tar.xz &&\
     cd /tmp && tar xf emacs-${EMACS_VERSION}.tar.xz &&\
     cd emacs-${EMACS_VERSION} &&\
