@@ -41,7 +41,9 @@ RUN\
 
 ################################################
 # SBT (and by implication, Scala)
-ADD https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt /usr/bin/sbt
+#ADD https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt /usr/bin/sbt
+#WORKAROUND https://github.com/paulp/sbt-extras/pull/120
+ADD https://raw.githubusercontent.com/fommil/dotfiles/master/bin/sbt /usb/bin/sbt
 RUN chmod a+x /usr/bin/sbt
 RUN\
   mkdir /tmp/sbt &&\
