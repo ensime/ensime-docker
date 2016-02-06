@@ -8,7 +8,7 @@ ENV JAVA_VARIANT java-1.7.0-openjdk-amd64
 
 ENV JAVA_HOME /usr/lib/jvm/${JAVA_VARIANT}/jre/
 ENV JDK_HOME /usr/lib/jvm/${JAVA_VARIANT}/
-ENV SBT_VARIANTS 0.13.9 0.13.10-RC1
+ENV SBT_VARIANTS 0.13.9 0.13.10-RC2
 ENV SCALA_VARIANTS 2.10.5 2.10.6 2.11.7
 
 ################################################
