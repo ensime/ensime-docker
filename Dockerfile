@@ -27,7 +27,7 @@ RUN\
   cd /root &&\
   git clone https://github.com/ensime/ensime-server.git &&\
   cd ensime-server &&\
-  for SCALA_VERSION in 2.10.4 2.10.5 2.10.6 2.11.6 2.11.7 2.11.8; do\
+  for SCALA_VERSION in 2.10.6 2.11.8; do\
     git clean -xfd &&\
     sbt gen-ensime gen-ensime-project ;\
   done &&\
