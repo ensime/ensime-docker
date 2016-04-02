@@ -15,9 +15,7 @@ ENV SCALA_VARIANTS 2.10.6 2.11.7 2.11.8
 ################################################
 # Package Management
 RUN\
-  echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' >> /etc/apt/sources.list &&\
-  echo 'deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' >> /etc/apt/sources.list &&\
-  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 &&\
+  echo 'deb http://ftp.debian.org/debian wheezy-backports main' >> /etc/apt/sources.list &&\
   cat /etc/apt/sources.list | sed 's/^deb /deb-src /' >> /etc/apt/sources.list &&\
   echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf &&\
   echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf &&\
@@ -28,7 +26,7 @@ RUN\
 ################################################
 # Base System
 RUN\
-  apt-get install -y curl unzip git locales ca-certificates &&\
+  apt-get install -y curl host jq unzip git locales ca-certificates &&\
   echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen &&\
   locale-gen &&\
   apt-get clean
