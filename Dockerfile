@@ -23,6 +23,8 @@ MAINTAINER Sam Halliday, sam.halliday@gmail.com
 ################################################
 # ENSIME Ivy Cache
 # (could do with using the right scala versions)
+RUN apt-get install -y maven
+
 RUN\
   cd /root &&\
   git clone https://github.com/ensime/ensime-server.git &&\
