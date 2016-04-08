@@ -32,3 +32,24 @@ RUN\
     sbt gen-ensime gen-ensime-project ;\
   done &&\
   rm -rf /root/ensime-server
+
+################################################
+# Fill up coursier cache
+RUN\
+  curl -L -o coursier https://git.io/v2L2P && chmod +x coursier
+  
+RUN\
+  for SCALA_VERSION in $SCALA_VERSIONS ; do\
+    SCALA_EDITION=$(echo $SCALA_VERSION | cut -c1-4) &&\
+    echo $SCALA_EDITION &&\
+    ./coursier fetch\
+    -r file:///$HOME/.m2/repository\
+    -r https://oss.sonatype.org/content/repositories/snapshots\
+    -r https://jcenter.bintray.com/\
+    org.ensime:ensime_${SCALA_EDITION}:0.9.10-SNAPSHOT\
+    -V org.scala-lang:scala-compiler:${SCALA_VERSION}\
+    -V org.scala-lang:scala-library:${SCALA_VERSION}\
+    -V org.scala-lang:scala-reflect:${SCALA_VERSION}\
+    -V org.scala-lang:scalap:${SCALA_VERSION} ;\
+  done ;
+    
