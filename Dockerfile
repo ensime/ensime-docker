@@ -1,7 +1,7 @@
 # https://docs.docker.com/reference/builder/
 # NOTE dockerignore is ignored https://github.com/docker/docker/issues/9455
 
-FROM ensime/ensime:v2.x
+FROM ensime/ci-server:v2.x
 MAINTAINER Sam Halliday, sam.halliday@gmail.com
 
 ################################################
