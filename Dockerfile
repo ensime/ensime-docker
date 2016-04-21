@@ -12,7 +12,7 @@ RUN\
   cd ensime-server &&\
   for SCALA_VERSION in 2.10.6 2.11.8; do\
     git clean -xfd &&\
-    sbt gen-ensime gen-ensime-project ;\
+    sbt ++$SCALA_VERSION gen-ensime gen-ensime-project ;\
   done &&\
-  rm -rf /root/ensime-server ;\
+  rm -rf /root/ensime-server &&\
   rm -rf $HOME/.coursier/cache/v1/https/oss.sonatype.org
