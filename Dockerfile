@@ -4,19 +4,19 @@
 FROM debian:jessie
 
 MAINTAINER Sam Halliday, sam.halliday@gmail.com
-ENV JAVA_VARIANT java-1.7.0-openjdk-amd64
 
-ENV JAVA_HOME /usr/lib/jvm/${JAVA_VARIANT}/jre/
-ENV JDK_HOME /usr/lib/jvm/${JAVA_VARIANT}/
 ENV SBT_VARIANTS 0.13.11
 ENV SCALA_VARIANTS 2.10.6 2.11.8
+ENV PATH /root/.jenv/shims:/root/.jenv/bin:$PATH
 
 ################################################
 # Package Management
 RUN\
+  echo 'deb http://repos.azulsystems.com/debian stable main' >> /etc/apt/sources.list &&\
   cat /etc/apt/sources.list | sed 's/^deb /deb-src /' >> /etc/apt/sources.list &&\
   echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf &&\
   echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf &&\
+  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9 &&\
   apt-get update -qq &&\
   apt-get autoremove -qq &&\
   apt-get clean
@@ -32,9 +32,14 @@ RUN\
 ################################################
 # Java
 RUN\
-  apt-get install -y openjdk-7-source &&\
-  update-java-alternatives -s ${JAVA_VARIANT} &&\
-  apt-get clean
+  apt-get install -y zulu-6 zulu-7 zulu-8 &&\
+  git clone https://github.com/gcuisinier/jenv.git /root/.jenv &&\
+  apt-get clean &&\
+  mkdir /root/.jenv/versions &&\
+  jenv add /usr/lib/jvm/zulu-6-amd64 &&\
+  jenv add /usr/lib/jvm/zulu-7-amd64 &&\
+  jenv add /usr/lib/jvm/zulu-8-amd64 &&\
+  jenv global 1.7
 
 ################################################
 # SBT (and by implication, Scala)
@@ -45,10 +50,14 @@ RUN\
   cd /tmp/sbt &&\
   mkdir -p project src/main/scala &&\
   touch src/main/scala/scratch.scala &&\
-  for SBT_VERSION in $SBT_VARIANTS ; do\
-    echo "sbt.version=$SBT_VERSION" > project/build.properties &&\
-    for SCALA_VERSION in $SCALA_VARIANTS ; do\
-      sbt ++$SCALA_VERSION clean updateClassifiers compile ;\
+  touch .jvmopts &&\
+  for JAVA_VERSION in 1.6 1.7 1.8 ; do\
+    for SBT_VERSION in $SBT_VARIANTS ; do\
+      echo "sbt.version=$SBT_VERSION" > project/build.properties &&\
+      for SCALA_VERSION in $SCALA_VARIANTS ; do\
+            echo $JAVA_VERSION > .java-version ;\
+            sbt ++$SCALA_VERSION clean updateClassifiers compile ;\
+      done ;\
     done ;\
   done &&\
   rm -rf /tmp/sbt
