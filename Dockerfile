@@ -72,23 +72,25 @@ RUN\
 RUN\
   apt-get install -y emacs24 &&\
   apt-get clean
-RUN\
-  apt-get install -y debfoster &&\
-  debfoster -q &&\
-  apt-get build-dep -y emacs24 &&\
-  mkdir /tmp/emacs-build &&\
-  echo 0 > /proc/sys/kernel/exec-shield &&\
-  for EMACS_VERSION in 24.5 ; do\
-    curl http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz -o /tmp/emacs-${EMACS_VERSION}.tar.xz &&\
-    cd /tmp && tar xf emacs-${EMACS_VERSION}.tar.xz &&\
-    cd emacs-${EMACS_VERSION} &&\
-    ./configure --prefix=/opt/emacs-${EMACS_VERSION} &&\
-    make && make install ;\
-  done &&\
-  echo Y | debfoster -f &&\
-  rm -rf /tmp/emacs* &&\
-  apt-get clean
-ENV PATH /opt/emacs-24.5/bin:${PATH}
+
+# can't build emacs in docker hub, see https://github.com/docker/docker/issues/22801
+# RUN\
+#   apt-get install -y debfoster &&\
+#   debfoster -q &&\
+#   apt-get build-dep -y emacs24 &&\
+#   mkdir /tmp/emacs-build &&\
+#   echo 0 > /proc/sys/kernel/exec-shield &&\
+#   for EMACS_VERSION in 24.5 ; do\
+#     curl http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz -o /tmp/emacs-${EMACS_VERSION}.tar.xz &&\
+#     cd /tmp && tar xf emacs-${EMACS_VERSION}.tar.xz &&\
+#     cd emacs-${EMACS_VERSION} &&\
+#     ./configure --prefix=/opt/emacs-${EMACS_VERSION} &&\
+#     make && make install ;\
+#   done &&\
+#   echo Y | debfoster -f &&\
+#   rm -rf /tmp/emacs* &&\
+#   apt-get clean
+# ENV PATH /opt/emacs-24.5/bin:${PATH}
 
 ################################################
 # Cask
