@@ -77,6 +77,7 @@ RUN\
   debfoster -q &&\
   apt-get build-dep -y emacs24 &&\
   mkdir /tmp/emacs-build &&\
+  echo 0 > /proc/sys/kernel/exec-shield &&\
   for EMACS_VERSION in 24.5 ; do\
     curl http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz -o /tmp/emacs-${EMACS_VERSION}.tar.xz &&\
     cd /tmp && tar xf emacs-${EMACS_VERSION}.tar.xz &&\
