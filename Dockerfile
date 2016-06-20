@@ -93,7 +93,7 @@ ENV PATH /root/.cask/bin:${PATH}
 ################################################
 # ensime-vim
 RUN\
-  apt-get install -yy make g++ gcc openssl libssl-dev ruby ruby-dev python-mock python-pip &&\
+  apt-get install -yy make g++ gcc openssl libssl-dev ruby ruby-dev python-dev python-mock python-pip &&\
   pip install websocket-client &&\
   gem install bundle &&\
   apt-get clean
