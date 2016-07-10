@@ -13,6 +13,7 @@ ENV PATH /root/.jenv/shims:/root/.jenv/bin:$PATH
 # Package Management
 RUN\
   echo 'deb http://repos.azulsystems.com/debian stable main' >> /etc/apt/sources.list &&\
+  echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list &&\
   cat /etc/apt/sources.list | sed 's/^deb /deb-src /' >> /etc/apt/sources.list &&\
   echo 'APT::Install-Recommends "0";' >> /etc/apt/apt.conf &&\
   echo 'APT::Install-Suggests "0";' >> /etc/apt/apt.conf &&\
@@ -70,7 +71,7 @@ RUN\
 # once we have done the compiles. Having the additional system emacs
 # ensures we have all runtime deps for our builds.
 RUN\
-  apt-get install -y emacs24 &&\
+  apt-get -t jessie-backports install -y emacs24 &&\
   apt-get clean
 
 # can't build emacs in docker hub, see https://github.com/docker/docker/issues/22801
