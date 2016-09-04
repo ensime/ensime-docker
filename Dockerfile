@@ -20,3 +20,7 @@ RUN\
   sbt updateClassifiers &&\
   rm -rf /root/ensime-sbt &&\
   rm -rf $HOME/.coursier/cache/v1/https/oss.sonatype.org
+
+################################################
+# Emacs build tool
+RUN cask upgrade-cask
