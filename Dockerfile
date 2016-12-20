@@ -5,8 +5,8 @@ FROM debian:jessie
 
 MAINTAINER Sam Halliday, sam.halliday@gmail.com
 
-ENV SBT_VARIANTS 0.13.11
-ENV SCALA_VARIANTS 2.10.6 2.11.8
+ENV SBT_VARIANTS 0.13.13
+ENV SCALA_VARIANTS 2.10.6 2.11.8 2.12.1
 ENV PATH /root/.jenv/shims:/root/.jenv/bin:$PATH
 
 ################################################
