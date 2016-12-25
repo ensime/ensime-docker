@@ -24,7 +24,7 @@ RUN\
   rm -rf /root/ensime-server &&\
   git clone --depth 1 --branch 2.0 https://github.com/ensime/ensime-sbt.git &&\
   cd ensime-sbt &&\
-  sbt updateClassifiers &&\
+  sbt updateClassifiers compile &&\
   cd /root &&\
   rm -rf /root/ensime-sbt &&\
   rm -rf $HOME/.coursier/cache/v1/https/oss.sonatype.org
