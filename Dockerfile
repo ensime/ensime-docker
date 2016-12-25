@@ -55,6 +55,7 @@ RUN\
   for JAVA_VERSION in 1.6 1.7 1.8 ; do\
     for SBT_VERSION in $SBT_VARIANTS ; do\
       echo "sbt.version=$SBT_VERSION" > project/build.properties &&\
+      echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.3")' > project/plugins.sbt &&\
       for SCALA_VERSION in $SCALA_VARIANTS ; do\
             echo $JAVA_VERSION > .java-version ;\
             sbt ++$SCALA_VERSION clean updateClassifiers compile ;\
