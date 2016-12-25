@@ -32,3 +32,8 @@ RUN\
 ################################################
 # Emacs build tool
 RUN cask upgrade-cask
+
+################################################
+# drone 0.5 uses /drone not /root
+RUN mkdir /drone &&\
+    mv /root/.sbt /root/.ivy2 /drone/ &&\
