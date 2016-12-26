@@ -116,7 +116,9 @@ RUN\
 # Drone deployment support
 RUN\
   apt-get install -yy openssh-client ccrypt &&\
-  apt-get clean
+  apt-get clean &&\
+  mkdir /root/.ssh &&\
+  chmod 0700 /root/.ssh
 
 ################################################
 # ENSIME 1.0 Cache (stable used by ensime-sbt)
