@@ -124,4 +124,6 @@ RUN\
   cd ensime-server &&\
   for SCALA_VERSION in 2.10.6 2.11.8; do\
     sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
-  done
+  done &&\
+  cd /root &&\
+  rm -rf /root/ensime-server
