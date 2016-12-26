@@ -115,3 +115,13 @@ RUN\
 RUN\
   apt-get install -yy openssh-client ccrypt &&\
   apt-get clean
+
+################################################
+# ENSIME 1.0 Cache (stable used by ensime-sbt)
+RUN\
+  cd /root &&\
+  git clone --depth 1 --branch 1.0 https://github.com/ensime/ensime-server.git &&\
+  cd ensime-server &&\
+  for SCALA_VERSION in 2.10.6 2.11.8; do\
+    sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
+  done
