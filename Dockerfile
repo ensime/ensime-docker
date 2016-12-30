@@ -54,8 +54,8 @@ RUN\
   touch .jvmopts &&\
   for JAVA_VERSION in 1.6 1.7 1.8 ; do\
     for SBT_VERSION in $SBT_VARIANTS ; do\
-      echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt
-      echo 'licenses := Seq(Apache2)' >> build.sbt
+      echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
+      echo 'licenses := Seq(Apache2)' >> build.sbt &&\
       echo "sbt.version=$SBT_VERSION" > project/build.properties &&\
       echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.3")' > project/plugins.sbt &&\
       for SCALA_VERSION in $SCALA_VARIANTS ; do\
