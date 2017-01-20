@@ -32,15 +32,16 @@ RUN\
 
 ################################################
 # Java
+# (note that zulu often segfaults, so we prefer Debian builds)
 RUN\
-  apt-get install -y zulu-6 zulu-7 zulu-8 &&\
+  apt-get install -y zulu-6 openjdk-7-source openjdk-8-source &&\
   git clone https://github.com/gcuisinier/jenv.git /root/.jenv &&\
   apt-get clean &&\
   mkdir /root/.jenv/versions &&\
   jenv add /usr/lib/jvm/zulu-6-amd64 &&\
-  jenv add /usr/lib/jvm/zulu-7-amd64 &&\
-  jenv add /usr/lib/jvm/zulu-8-amd64 &&\
-  jenv global 1.7
+  jenv add /usr/lib/jvm/java-7-openjdk-amd64 &&\
+  jenv add /usr/lib/jvm/java-8-openjdk-amd64 &&\
+  jenv global 1.8
 
 ################################################
 # SBT (and by implication, Scala)
