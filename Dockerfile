@@ -61,7 +61,7 @@ RUN\
       echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.5")' > project/plugins.sbt &&\
       for SCALA_VERSION in $SCALA_VARIANTS ; do\
             echo $JAVA_VERSION > .java-version ;\
-            sbt ++$SCALA_VERSION clean updateClassifiers compile ;\
+            sbt ++$SCALA_VERSION clean updateClassifiers updateSbtClassifiers compile ;\
       done ;\
     done ;\
   done &&\
