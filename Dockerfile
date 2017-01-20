@@ -58,7 +58,7 @@ RUN\
       echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
       echo 'licenses := Seq(Apache2)' >> build.sbt &&\
       echo "sbt.version=$SBT_VERSION" > project/build.properties &&\
-      echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.3")' > project/plugins.sbt &&\
+      echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.5")' > project/plugins.sbt &&\
       for SCALA_VERSION in $SCALA_VARIANTS ; do\
             echo $JAVA_VERSION > .java-version ;\
             sbt ++$SCALA_VERSION clean updateClassifiers compile ;\
