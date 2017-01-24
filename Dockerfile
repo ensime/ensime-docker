@@ -10,7 +10,7 @@ RUN\
   cd /root &&\
   git clone --depth 1 --branch 2.0 https://github.com/ensime/ensime-server.git &&\
   cd ensime-server &&\
-  for SCALA_VERSION in 2.10.6 2.11.8; do\
+  for SCALA_VERSION in 2.10.6 2.11.8 2.12.1 ; do\
     sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
   done &&\
   cd /root &&\
