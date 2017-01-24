@@ -5,8 +5,6 @@ FROM debian:jessie
 
 MAINTAINER Sam Halliday, sam.halliday@gmail.com
 
-ENV SBT_VARIANTS 0.13.13
-ENV SCALA_VARIANTS 2.10.6 2.11.8 2.12.1
 ENV PATH /root/.jenv/shims:/root/.jenv/bin:$PATH
 
 ################################################
@@ -53,17 +51,19 @@ RUN\
   mkdir -p project src/main/scala &&\
   touch src/main/scala/scratch.scala &&\
   touch .jvmopts &&\
-  for JAVA_VERSION in 1.6 1.7 1.8 ; do\
-    for SBT_VERSION in $SBT_VARIANTS ; do\
-      echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
-      echo 'licenses := Seq(Apache2)' >> build.sbt &&\
-      echo "sbt.version=$SBT_VERSION" > project/build.properties &&\
-      echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.5")' > project/plugins.sbt &&\
-      for SCALA_VERSION in $SCALA_VARIANTS ; do\
-            echo $JAVA_VERSION > .java-version ;\
-            sbt ++$SCALA_VERSION clean updateClassifiers updateSbtClassifiers compile ;\
+  echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
+  echo 'licenses := Seq(Apache2)' >> build.sbt &&\
+  echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.6")' > project/plugins.sbt &&\
+  for SBT_VERSION in 0.13.13 ; do\
+    echo "sbt.version=$SBT_VERSION" > project/build.properties ;\
+    for JAVA_VERSION in 1.6 1.7 1.8 ; do\
+      for SCALA_VERSION in 2.10.6 2.11.8 ; do\
+        echo $JAVA_VERSION > .java-version ;\
+        sbt ++$SCALA_VERSION clean updateClassifiers updateSbtClassifiers compile ;\
       done ;\
     done ;\
+    echo 1.8 > .java-version ;\
+    sbt ++2.12.1 clean updateClassifiers updateSbtClassifiers compile ;\
   done &&\
   rm -rf /tmp/sbt
 
@@ -127,7 +127,7 @@ RUN\
   cd /root &&\
   git clone --depth 1 --branch 1.0 https://github.com/ensime/ensime-server.git &&\
   cd ensime-server &&\
-  for SCALA_VERSION in 2.10.6 2.11.8 2.12.1 ; do\
+  for SCALA_VERSION in 2.10.6 2.11.8 ; do\
     sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
   done &&\
   cd /root &&\
