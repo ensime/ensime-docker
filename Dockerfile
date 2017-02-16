@@ -50,15 +50,14 @@ RUN\
   cd /tmp/sbt &&\
   mkdir -p project src/main/scala &&\
   touch src/main/scala/scratch.scala &&\
-  touch .jvmopts &&\
   echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
   echo 'licenses := Seq(Apache2)' >> build.sbt &&\
   echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.6")' > project/plugins.sbt &&\
   for SBT_VERSION in 0.13.13 ; do\
     echo "sbt.version=$SBT_VERSION" > project/build.properties ;\
     for JAVA_VERSION in 1.6 1.7 1.8 ; do\
+      echo $JAVA_VERSION > .java-version ;\
       for SCALA_VERSION in 2.10.6 2.11.8 ; do\
-        echo $JAVA_VERSION > .java-version ;\
         sbt ++$SCALA_VERSION clean updateClassifiers updateSbtClassifiers compile ;\
       done ;\
     done ;\
