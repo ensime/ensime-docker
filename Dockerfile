@@ -42,16 +42,21 @@ RUN\
 
 ################################################
 # SBT (and by implication, Scala)
+# including WORKAROUND for http://stackoverflow.com/questions/41966066
 ADD https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt /usr/bin/sbt
 RUN chmod a+x /usr/bin/sbt
 RUN\
+  mkdir -p ~/.sbt/0.13 &&\
+  echo 'resolvers += "JBoss" at "https://repository.jboss.org/"' > ~/.sbt/0.13/global.sbt &&\
   mkdir /tmp/sbt &&\
   cd /tmp/sbt &&\
   mkdir -p project src/main/scala &&\
   touch src/main/scala/scratch.scala &&\
+  touch LICENSE &&\
+  touch NOTICE &&\
   echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
   echo 'licenses := Seq(Apache2)' >> build.sbt &&\
-  echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.6")' > project/plugins.sbt &&\
+  echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.7")' > project/plugins.sbt &&\
   for SBT_VERSION in 0.13.13 ; do\
     echo "sbt.version=$SBT_VERSION" > project/build.properties ;\
     for JAVA_VERSION in 1.6 1.7 1.8 ; do\
@@ -67,33 +72,9 @@ RUN\
 
 ################################################
 # Emacs
-#
-# This involves installing the build-deps for emacs23. To clean up we
-# need to take a debfoster snapshot of before and agressively purge
-# once we have done the compiles. Having the additional system emacs
-# ensures we have all runtime deps for our builds.
 RUN\
   apt-get -t jessie-backports install -y emacs24 &&\
   apt-get clean
-
-# can't build emacs in docker hub, see https://github.com/docker/docker/issues/22801
-# RUN\
-#   apt-get install -y debfoster &&\
-#   debfoster -q &&\
-#   apt-get build-dep -y emacs24 &&\
-#   mkdir /tmp/emacs-build &&\
-#   echo 0 > /proc/sys/kernel/exec-shield &&\
-#   for EMACS_VERSION in 24.5 ; do\
-#     curl http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz -o /tmp/emacs-${EMACS_VERSION}.tar.xz &&\
-#     cd /tmp && tar xf emacs-${EMACS_VERSION}.tar.xz &&\
-#     cd emacs-${EMACS_VERSION} &&\
-#     ./configure --prefix=/opt/emacs-${EMACS_VERSION} &&\
-#     make && make install ;\
-#   done &&\
-#   echo Y | debfoster -f &&\
-#   rm -rf /tmp/emacs* &&\
-#   apt-get clean
-# ENV PATH /opt/emacs-24.5/bin:${PATH}
 
 ################################################
 # Cask
@@ -127,7 +108,7 @@ RUN\
   cd ensime-server &&\
   echo "sbt.version=0.13.13" > project/build.properties &&\
   for SCALA_VERSION in 2.10.6 2.11.8 ; do\
-    sbt ++$SCALA_VERSION ensimeConfig ;\
+    sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
   done &&\
   cd /root &&\
   rm -rf /root/ensime-server
