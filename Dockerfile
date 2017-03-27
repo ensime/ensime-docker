@@ -42,7 +42,6 @@ RUN\
 
 ################################################
 # SBT (and by implication, Scala)
-# including WORKAROUND for http://stackoverflow.com/questions/41966066
 ADD https://raw.githubusercontent.com/paulp/sbt-extras/master/sbt /usr/bin/sbt
 RUN chmod a+x /usr/bin/sbt
 RUN\
@@ -56,7 +55,7 @@ RUN\
   touch NOTICE &&\
   echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
   echo 'licenses := Seq(Apache2)' >> build.sbt &&\
-  echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.7")' > project/plugins.sbt &&\
+  echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.11")' > project/plugins.sbt &&\
   for SBT_VERSION in 0.13.13 ; do\
     echo "sbt.version=$SBT_VERSION" > project/build.properties ;\
     for JAVA_VERSION in 1.6 1.7 1.8 ; do\
