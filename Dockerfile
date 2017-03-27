@@ -105,7 +105,6 @@ RUN\
   cd /root &&\
   git clone --depth 1 --branch 1.0 https://github.com/ensime/ensime-server.git &&\
   cd ensime-server &&\
-  echo "sbt.version=0.13.13" > project/build.properties &&\
   for SCALA_VERSION in 2.10.6 2.11.8 ; do\
     sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
   done &&\
