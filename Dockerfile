@@ -56,16 +56,16 @@ RUN\
   echo 'sonatypeGithub := ("ensime", "ensime-docker")' > build.sbt &&\
   echo 'licenses := Seq(Apache2)' >> build.sbt &&\
   echo 'addSbtPlugin("com.fommil" % "sbt-sensible" % "1.1.11")' > project/plugins.sbt &&\
-  for SBT_VERSION in 0.13.13 ; do\
+  for SBT_VERSION in 0.13.13 0.13.15 ; do\
     echo "sbt.version=$SBT_VERSION" > project/build.properties ;\
     for JAVA_VERSION in 1.6 1.7 1.8 ; do\
       echo $JAVA_VERSION > .java-version ;\
-      for SCALA_VERSION in 2.10.6 2.11.8 ; do\
+      for SCALA_VERSION in 2.10.6 2.11.8 2.11.11 ; do\
         sbt ++$SCALA_VERSION clean updateClassifiers updateSbtClassifiers compile ;\
       done ;\
     done ;\
     echo 1.8 > .java-version ;\
-    sbt ++2.12.1 clean updateClassifiers updateSbtClassifiers compile ;\
+    sbt ++2.12.2 clean updateClassifiers updateSbtClassifiers compile ;\
   done &&\
   rm -rf /tmp/sbt
 
