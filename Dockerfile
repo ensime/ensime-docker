@@ -25,14 +25,14 @@ RUN\
   git clone --depth 1 https://github.com/fommil/stalagmite.git &&\
   cd stalagmite &&\
   for SCALA_VERSION in 2.11.11 2.12.2 ; do\
-    sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
+    sbt ++$SCALA_VERSION update ;\
   done &&\
   cd /root &&\
   rm -rf /root/stalagmite &&\
   git clone --depth 1 https://github.com/fommil/drone-dynamic-agents.git &&\
   cd drone-dynamic-agents &&\
   for SCALA_VERSION in 2.12.2 ; do\
-    sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
+    sbt ++$SCALA_VERSION update ;\
   done &&\
   cd /root &&\
   rm -rf /root/drone-dynamic-agents &&\
