@@ -22,6 +22,13 @@ RUN\
   sbt updateClassifiers &&\
   cd /root &&\
   rm -rf /root/ensime-sbt &&\
+  git clone --depth 1 https://github.com/fommil/stalagmite.git &&\
+  cd stalagmite &&\
+  for SCALA_VERSION in 2.11.11 2.12.2 ; do\
+    sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
+  done &&\
+  cd /root &&\
+  rm -rf /root/stalagmite &&\
   rm -rf $HOME/.coursier/cache/v1/https/oss.sonatype.org
 
 ################################################
