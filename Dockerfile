@@ -29,6 +29,13 @@ RUN\
   done &&\
   cd /root &&\
   rm -rf /root/stalagmite &&\
+  git clone --depth 1 https://github.com/fommil/drone-dynamic-agents.git &&\
+  cd drone-dynamic-agents &&\
+  for SCALA_VERSION in 2.12.2 ; do\
+    sbt ++$SCALA_VERSION ensimeConfig ensimeConfigProject ;\
+  done &&\
+  cd /root &&\
+  rm -rf /root/drone-dynamic-agents &&\
   rm -rf $HOME/.coursier/cache/v1/https/oss.sonatype.org
 
 ################################################
